@@ -11,3 +11,22 @@ A terminal app that creates bare-bones Python code projects faster that doing it
 ## Why?
 
 I create many of these projects for prototyping ideas and want to avoid doing it manually
+
+## How To Run?
+
+Directly
+
+```bash
+python app/main.py
+```
+
+Windows shortcut
+
+- Create a batch file
+- Create a shortcut via right click context menu
+- Pin the shortcut to taskbar via right click context menu
+
+```batch
+@echo off
+python "C:\path\to\your_script.py"
+```

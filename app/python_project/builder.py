@@ -25,12 +25,12 @@ class Builder:
             project_app_directory = self.__prepare_project_directory(full_path)
 
             script_dir = os.path.dirname(os.path.abspath(__file__))
-            source_directory = os.path.join(script_dir, '..\\..', 'code_templates')
+            source_directory = os.path.join(script_dir, '../..', 'code_templates')
             self.__populate_project_with_template_files(source_directory, full_path)
 
             self.__replace_variables(full_path, "$PROJECT_NAME$", project_model.project_name)
 
-            source_directory = os.path.join(script_dir, '..\\..', 'code_templates', 'app')
+            source_directory = os.path.join(script_dir, '../..', 'code_templates', 'app')
             self.__populate_project_with_template_files(source_directory, project_app_directory)
         except Exception as e:
             print(f'Exception: {e}')

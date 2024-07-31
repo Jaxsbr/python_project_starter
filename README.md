@@ -19,14 +19,3 @@ Directly
 ```bash
 python app/main.py
 ```
-
-Windows shortcut
-
-- Create a batch file
-- Create a shortcut via right click context menu
-- Pin the shortcut to taskbar via right click context menu
-
-```batch
-@echo off
-python "C:\path\to\your_script.py"
-```

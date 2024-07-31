@@ -20,16 +20,22 @@ class Builder:
     def build(self, project_model: ProjectModel) -> None:
         print("Builder.build()")
         try:
-            full_path = self.__get_full_project_path(project_model.project_name)
-            self.__make_virtual_env(full_path, project_model.venv_name)
+            # Create project directory
+            full_path = self.__get_full_project_path(project_model.project_name)            
             project_app_directory = self.__prepare_project_directory(full_path)
 
+            # Create virtual environment
+            self.__make_virtual_env(full_path, project_model.venv_name)
+
+            # Copy root level code template files
             script_dir = os.path.dirname(os.path.abspath(__file__))
             source_directory = os.path.join(script_dir, '../..', 'code_templates')
             self.__populate_project_with_template_files(source_directory, full_path)
 
+            # Replace variables in root level code template files
             self.__replace_variables(full_path, "$PROJECT_NAME$", project_model.project_name)
 
+            # Copy root level code template files
             source_directory = os.path.join(script_dir, '../..', 'code_templates', 'app')
             self.__populate_project_with_template_files(source_directory, project_app_directory)
         except Exception as e:

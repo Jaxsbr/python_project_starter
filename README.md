@@ -4,17 +4,21 @@ A terminal app that creates bare-bones Python code projects faster that doing it
 
 ## How?
 
-1. The app collects your desired project's details (name, venv name)
-2. It generates a project structure in a configurable destination directory
-3. It create `main.py`, `.gitignore` and `README.md` starter files in the project directory
+1. The app collects your desired project's details
+2. It generates a project structure with quick start files
+3. And configures a virtual environment
 
-## Why?
+### Template files
 
-I create many of these projects for prototyping ideas and want to avoid doing it manually
+- `.gitignore`
+- `README.md`
+- `requirements.txt`
+- `app/main.py`
+- `app/__init__.py`
 
-## How To Run?
+## How use
 
-Directly
+### Start
 
 ```bash
 python app/main.py

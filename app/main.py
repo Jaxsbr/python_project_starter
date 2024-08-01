@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
-# NOTE: shebang makes this script work with my WSL setup
-
 from python_project.builder import Builder
 from python_project.interrogator import get_project_model
+import subprocess
 
 def main():
     print('[==== Hello Mr Python developer ====]')
@@ -12,7 +10,7 @@ def main():
     print(f'[--- Default Project Output Path ---]: {output_path}')
     path_input = input('Y = Set project output path. N/Empty = Use default): ').strip()
     if path_input == 'y':        
-        output_path = input('Enter the project name: ').strip()
+        output_path = input('Enter the project output path: ').strip()
         if not output_path:
             print('[==== Good bey ;) ====]')
             return
@@ -26,6 +24,7 @@ def main():
     print(f'project name: {model.project_name}')
     print(f'venv name: {model.venv_name}')
     builder.build(model)
+
     print('[==== All done, good bey ;) ====]')
 
 if __name__ == "__main__":

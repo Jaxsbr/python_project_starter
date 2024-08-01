@@ -13,31 +13,34 @@ from python_project.project_model import ProjectModel
 #   README.md
 
 class Builder:
-    def __init__(self, project_path: str):
-        self.__project_path = project_path
-    
+    def __init__(self, project_output_path: str):
+        self.__project_output_path = project_output_path
+        self.__project_path = ''
 
     def build(self, project_model: ProjectModel) -> None:
         print("Builder.build()")
         try:
-            # Create project directory
-            full_path = self.__get_full_project_path(project_model.project_name)            
-            project_app_directory = self.__prepare_project_directory(full_path)
+            # Define paths
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            python_exe_path = os.path.join(script_dir, '../..', '.venv', 'bin', 'python')
+            root_template_directory = os.path.join(script_dir, '../..', 'code_templates')
+            app_template_directory = os.path.join(root_template_directory, 'app')
 
-            # Create virtual environment
-            self.__make_virtual_env(full_path, project_model.venv_name)
+            # Create project directory
+            self.__project_path = self.__get_full_project_path(project_model.project_name)            
+            project_app_directory = self.__prepare_project_directory()
+
+            # Create virtual environment with path to venv python.exe            
+            self.__make_virtual_env(project_model.venv_name, python_exe_path)
 
             # Copy root level code template files
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            source_directory = os.path.join(script_dir, '../..', 'code_templates')
-            self.__populate_project_with_template_files(source_directory, full_path)
+            self.__populate_project_with_template_files(root_template_directory, self.__project_path)
 
             # Replace variables in root level code template files
-            self.__replace_variables(full_path, "$PROJECT_NAME$", project_model.project_name)
+            self.__replace_variables(self.__project_path, "$PROJECT_NAME$", project_model.project_name)
 
-            # Copy root level code template files
-            source_directory = os.path.join(script_dir, '../..', 'code_templates', 'app')
-            self.__populate_project_with_template_files(source_directory, project_app_directory)
+            # Copy root level code template files            
+            self.__populate_project_with_template_files(app_template_directory, project_app_directory)
         except Exception as e:
             print(f'Exception: {e}')
 
@@ -65,8 +68,8 @@ class Builder:
                 shutil.copy(file_path, destination_file_path)
 
 
-    def __prepare_project_directory(self, destination_directory_path: str) -> str:
-        project_app_directory = os.path.join(destination_directory_path, 'app')
+    def __prepare_project_directory(self) -> str:
+        project_app_directory = os.path.join(self.__project_path, 'app')
         os.makedirs(project_app_directory, exist_ok=True)
         if os.path.isdir(project_app_directory):
             print(f'[--- Project app dir created ---]: {project_app_directory}')
@@ -74,19 +77,19 @@ class Builder:
         raise Exception(f'Path not valid: {project_app_directory}')
 
 
-    def __make_virtual_env(self, path: str, venv_name: str) -> None:
-        os.chdir(path)
-        result = subprocess.run(['python', '-m', 'venv', venv_name], check=True)
+    def __make_virtual_env(self, venv_name: str, python_exe_path: str) -> None:
+        os.chdir(self.__project_path)
+        result = subprocess.run([python_exe_path, '-m', 'venv', venv_name], check=True)
         if (result.returncode != 0):
             raise Exception('Venv creation failed')
-        venv_path = os.path.join(path, venv_name)
+        venv_path = os.path.join(self.__project_path, venv_name)
         if os.path.isdir(venv_path) == False:
             raise Exception(f'Venv directory failed to be created at: {venv_path}')
         print(f'[--- Venv created ---]: {venv_path}')
 
 
     def __get_full_project_path(self, project_name: str) -> str:        
-        path = os.path.join(self.__project_path, project_name)
+        path = os.path.join(self.__project_output_path, project_name)
         os.makedirs(path, exist_ok=True)
         if os.path.isdir(path):
             print(f'[--- Project created ---]: {path}')

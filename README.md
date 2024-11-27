@@ -1,6 +1,6 @@
 # Python Project Starter
 
-A terminal app that creates bare-bones Python code projects faster that doing it manually.
+A script that creates bare-bones Python code projects faster that doing it manually.
 
 ## How?
 
@@ -21,5 +21,5 @@ A terminal app that creates bare-bones Python code projects faster that doing it
 ### Start
 
 ```bash
-python app/main.py
+bash run.sh
 ```

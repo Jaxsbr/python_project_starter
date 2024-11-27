@@ -1,6 +1,6 @@
 # Python Project Starter
 
-A script that creates bare-bones Python code projects faster that doing it manually.
+A script that creates bare-bones Python code projects faster than doing it manually.
 
 ## How?
 

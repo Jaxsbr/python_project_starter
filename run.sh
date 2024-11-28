@@ -20,8 +20,28 @@ else
     exit 1
 fi
 
+# Prompt the user for the project type
+read -p "Enter the project type: 1 = simple | 2 = pygame | 3 = ui-pyqt5: " project_type
+
+# Determine the subdirectory based on the project type
+case $project_type in
+    1)
+        project_type_str="simple"
+        ;;
+    2)
+        project_type_str="pygame"
+        ;;
+    3)
+        project_type_str="ui-pyqt5"
+        ;;
+    *)
+        echo "Invalid project type selected!"
+        exit 1
+        ;;
+esac
+
 # Prompt the user for the source directory to copy files from
-source_dir="${base_dir}/python_project_starter/code_templates"
+source_dir="${base_dir}/python_project_starter/code_templates/${project_type_str}"
 
 # Verify the source directory exists
 if [ ! -d "$source_dir" ]; then

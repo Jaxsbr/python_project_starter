@@ -6,7 +6,7 @@ save_path = "sentiments.json"
 class MainWindow(QWidget):
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowTitle("Sentiment Analyzer")
+        self.setWindowTitle("UI-PyQt5 Project")
         self._init_widgets()
 
 
